@@ -4,14 +4,19 @@ export default class App
     nbrArticles;
 
     constructor() {
-        this.nbrArticles = document.querySelectorAll("#content article").length
-
         this.initElements()
+        this.displayNbrArticles()
         this.initChrono()
+    }
+
+    displayNbrArticles()
+    {
+        console.log(this.articles.length);
     }
 
     initElements()
     {
+        this.articles = document.querySelectorAll("#content article")
         this.chrono = document.querySelector("#information div:last-child span")
     }
 
