@@ -111,8 +111,27 @@ main {
     right: 10px;
     font-family: "Font Awesome 6 Free", sans-serif;
     margin-left: 10px;
+    transition: all 0.05s ease-in-out;
+}
+
+#content article.expanded h2:after {
+    transform: rotate(180deg);
 }
 
 #content article p {
     margin: 10px;
+}
+
+article {
+    overflow: hidden;
+}
+
+article:not(.expanded) p {
+    height: 0;
+    margin: 0 !important;
+}
+
+article.expanded {
+    height: auto;
+    margin: inherit
 }

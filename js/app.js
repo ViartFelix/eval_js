@@ -5,6 +5,7 @@ export default class App
 
     constructor() {
         this.initElements()
+        this.initEvents()
         this.displayNbrArticles()
         this.initChrono()
     }
@@ -39,6 +40,34 @@ export default class App
         }, 10 * 60 *1000) // 10 mins
     }
 
+    initEvents()
+    {
+        this.articles.forEach((article) => {
+            article
+                .querySelector("h2")
+                .addEventListener("click", (e) => {
+                    this.unselectAll()
+                    article.classList.add("expanded")
+                })
+        })
+    }
+
+    unselectAll()
+    {
+        this.articles.forEach((article) => {
+            article.classList.remove("expanded")
+        })
+    }
+
+    handleArticleDeploy(e)
+    {
+        this.articles.forEach((article) => {
+            console.log(article);
+        })
+    }
+
+    
+
     getDateDiff(dateOne, dateTwo)
     {
         //différence entre les deux dates
@@ -59,7 +88,6 @@ export default class App
             secods: secondsDifference,
             raw: difference
         }
-
     }
 }
 
