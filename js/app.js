@@ -1,7 +1,9 @@
 export default class App
 {
-    //nombres de balises articles
-    nbrArticles;
+    //si la vidéo se joue
+    videoPlaying = false;
+    //si la vidéo est en plein écran
+    videoFullScreen = false;
 
     constructor() {
         this.initElements()
@@ -19,6 +21,7 @@ export default class App
     {
         this.articles = document.querySelectorAll("#content article")
         this.chrono = document.querySelector("#information div:last-child span")
+        this.video = document.querySelector("#video")
     }
 
     /**
@@ -50,6 +53,79 @@ export default class App
                     article.classList.add("expanded")
                 })
         })
+
+        this.video.querySelector("#video-play").addEventListener("click",() => {
+            this.handleVideoPlay()
+            this.updateVideoHtml()
+        })
+
+        this.video.querySelector("#video-reset").addEventListener("click",() => {
+            this.handleVideoReset()
+            this.updateVideoHtml()
+        })
+
+        this.video.querySelector("#video-fullscreen").addEventListener("click", () => {
+            this.handleVideoFullScreen()
+            this.updateVideoHtml()
+        })
+
+        this.video.querySelector("#video-progress").addEventListener("click", (e) => {
+            this.handleProgressChange(e)
+            this.updateVideoHtml()
+        })
+    }
+
+    handleProgressChange(e)
+    {
+        const el = e.target
+        const x = e.pageX - el.offsetLeft
+        const y = e.pageY - el.offsetTop
+
+        const percent = e.target.value = x * el.max / el.offsetWidth - 42.484;
+
+        el.value=percent
+    }
+
+    handleVideoFullScreen()
+    {
+        this.videoFullScreen = !this.videoFullScreen
+
+        const player = this.video.querySelector("video")
+
+        if(this.videoFullScreen) {
+            this.video.style.position = "absolute"
+            this.video.style.left = "0px"
+            this.video.style.top = "0px"
+            this.video.style.width = "100vw"
+            this.video.style.height = "100vh"
+            this.video.style.zIndex = "99999"
+            this.video.style.maxWidth = "100vw"
+            player.style.width = "100vw"
+            player.style.maxWidth = "100vw"
+        } else {
+            this.video.attributeStyleMap.clear()
+            player.attributeStyleMap.clear()
+        }
+    }
+
+
+    handleVideoReset()
+    {
+        const player = this.video.querySelector("video")
+        player.pause();
+        player.currentTime = 0;
+        player.play();
+    }
+
+    handleVideoPlay(e)
+    {
+        this.videoPlaying = !this.videoPlaying
+
+        if(this.videoPlaying) {
+            this.video.querySelector("video").play()
+        } else {
+            this.video.querySelector("video").pause()
+        }
     }
 
     unselectAll()
@@ -64,6 +140,19 @@ export default class App
         this.articles.forEach((article) => {
             console.log(article);
         })
+    }
+
+    updateVideoHtml()
+    {
+        const el = this.video.querySelector("#video-play i")
+
+        if(this.videoPlaying === true) {
+            el.classList.add("fa-play")
+            el.classList.remove("fa-pause")
+        } else {
+            el.classList.remove("fa-play")
+            el.classList.add("fa-pause")
+        }
     }
 
     
