@@ -5,6 +5,13 @@ export default class App
     //si la vidéo est en plein écran
     videoFullScreen = false;
 
+    keyPresses = [
+        38,38,40,40,37,39,37,39,66,65
+    ]
+    codePos = 0;
+
+
+
     constructor() {
         this.initElements()
         this.initEvents()
@@ -79,6 +86,15 @@ export default class App
             this.handleProgressChange(e)
             this.updateVideoHtml()
         })
+
+        window.addEventListener("keydown", (e) => {
+            this.handleKonamiCode(e)
+        })
+    }
+
+    handleKonamiCode(e)
+    {
+        const expected = this.keyPresses[this.codePos]
     }
 
     handleProgressChange(e)
