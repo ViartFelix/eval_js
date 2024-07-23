@@ -29,11 +29,22 @@ export default class App
      */
     initChrono()
     {
-        const start = new Date();
+
+        let start;
+
+        if(localStorage.getItem('chrono_before') !== undefined)
+        {
+            start = new Date(localStorage.getItem("chrono_before"))
+        } else {
+            new Date()
+        }
 
         setInterval(()=>{
             const now = new Date();
             const diff = this.getDateDiff(now, start)
+
+            localStorage.setItem("chrono_before", start)
+            localStorage.setItem("chrono_after", now)
 
             this.chrono.textContent = diff.minutes + ":" + diff.secods
         }, 10)
@@ -154,8 +165,6 @@ export default class App
             el.classList.add("fa-pause")
         }
     }
-
-    
 
     getDateDiff(dateOne, dateTwo)
     {
