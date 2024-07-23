@@ -30,14 +30,9 @@ export default class App
     initChrono()
     {
 
-        let start;
-
-        if(localStorage.getItem('chrono_before') !== undefined)
-        {
-            start = new Date(localStorage.getItem("chrono_before"))
-        } else {
-            new Date()
-        }
+        const start = localStorage.getItem('chrono_before') !== undefined
+            ? new Date(localStorage.getItem("chrono_before"))
+            : new Date();
 
         setInterval(()=>{
             const now = new Date();
